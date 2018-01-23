@@ -27,7 +27,14 @@ function getColor(d) {
         return  d == 0 ? '#d73027':
                 d < 0.50 ? '#fc8d59': 
                 d < 1 ? '#fee08b':
-                '#66bd63'
+                '#66bd63';
+    }
+
+function getBorder(d) {
+        return d == 0 ? '#AC1A12':
+            d < 0.50 ? '#E56D33':
+            d < 1 ? '#D8B757':
+            '#3F9C3A';
     }
 
 function getRadius(d) {
@@ -38,7 +45,7 @@ function getRadius(d) {
         d < 100?   7:
         d < 200?   8:
         d < 400 ?   9:
-        10
+        10;
     }
 
 // INTERACTION
@@ -49,7 +56,7 @@ function highlightFeature(e) {
 
     layer.setStyle({
         fillOpacity: 1,
-        strokeWidth: 15
+        opacity: 1
     });
 
     $(e.target.getElement()).attr('id', 'active');
@@ -67,7 +74,8 @@ function resetHighlight(e) {
     var layer = e.target;
 
     layer.setStyle({
-        fillOpacity: 0.5
+        fillOpacity: 0.5,
+        opacity: 0.5
     });
 
     $(e.target.getElement()).removeAttr("id");
@@ -88,9 +96,9 @@ function pointToLayer(feature, latlng) {
     return L.circleMarker(latlng, 
         {
             radius: getRadius(feature.properties.All_Counted_Units),
-            color: getColor(feature.properties.Pct_Total_Units_Affordable),
+            color: getBorder(feature.properties.Pct_Total_Units_Affordable),
             fillColor: getColor(feature.properties.Pct_Total_Units_Affordable),
-            weight: 1.5,
+            weight: 1,
             opacity: 0.5,
             fillOpacity: 0.5
         }
@@ -140,7 +148,6 @@ function unitUnits(x) {
 geojson.bindPopup(function (layer) {
     return L.Util.template('<h3>' + layer.feature.properties.Number + ' ' + toTitleCase(layer.feature.properties.Street) + ', ' + layer.feature.properties.Borough + '</h3>' +
             'This building in ' + layer.feature.properties.Neighborhood + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + ' </b> counting towards the Housing New York plan. ' +
-            'A typical (median-income) household in this neighborhood makes about <b>$' + numberWithCommas(layer.feature.properties.MHI_2015) + ' a year</b>, meaning they can afford <b>' + Math.floor(layer.feature.properties.Pct_Total_Units_Affordable*1000)/10 + '%</b> of the units in this building.' +
             '<br></br><table>' + 
               '<tr><td>Units for $0 to $23,350 incomes</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
               '<tr><td>Units for $23,351 to $38,850 incomes</td><td>' + layer.feature.properties.Very_Low_Income + '</td></tr>' +
@@ -148,7 +155,8 @@ geojson.bindPopup(function (layer) {
               '<tr><td>Units for $62,150 to $93,240 incomes</td><td>' + layer.feature.properties.Moderate_Income + '</td></tr>' +
               '<tr><td>Units for $93,241 to $128,205 incomes </td><td>' + layer.feature.properties.Middle_Income + '</td></tr>' +
               '<tr><td>Units listed as Other</td><td>' + layer.feature.properties.Other + '</td></tr>' +
-              '</table><br>');
+              '</table><br>' +
+              'A typical (median-income) household in this neighborhood makes about <b>$' + numberWithCommas(layer.feature.properties.MHI_2015) + ' a year</b>, meaning they can afford <b>' + Math.floor(layer.feature.properties.Pct_Total_Units_Affordable*1000)/10 + '%</b> of the units in this building.');
         });
 
 map.on('popupopen', function(e) {
