@@ -212,4 +212,8 @@ input[type="checkbox" i] {
     .leaflet-popup-content-wrapper {
         max-width: 250px;
     }
+
+    .leaflet-touch .leaflet-control-geocoder {
+        max-width: 200px;
+    }
 }
