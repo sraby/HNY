@@ -23,13 +23,23 @@ basemap.addTo(map);
 
 // SYMBOLOGY FUNCTIONS 
 
-function getColor(d) 
-    {
+function getColor(d) {
         return  d == 0 ? '#d73027':
                 d < 0.50 ? '#fc8d59': 
                 d < 1 ? '#fee08b':
                 '#66bd63'
-        }
+    }
+
+function getRadius(d) {
+        return d < 5 ? 3:
+        d < 10 ? 4: 
+        d < 20?   5:
+        d < 50?   6:
+        d < 100?   7:
+        d < 200?   8:
+        d < 400 ?   9:
+        10
+    }
 
 // INTERACTION
 
@@ -39,12 +49,12 @@ function highlightFeature(e) {
 
     layer.setStyle({
         fillOpacity: 1,
-        radius: 9
+        strokeWidth: 15
     });
 
     $(e.target.getElement()).attr('id', 'active');
 
-    $('.leaflet-interactive').not('#active').css("fillOpacity","0.25");
+    $('.leaflet-interactive').not('#active').css("fillOpacity","0.2").css("strokeOpacity","0.25");
 
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
@@ -57,13 +67,12 @@ function resetHighlight(e) {
     var layer = e.target;
 
     layer.setStyle({
-        fillOpacity: 0.5,
-        radius: 5
+        fillOpacity: 0.5
     });
 
     $(e.target.getElement()).removeAttr("id");
 
-    $('.leaflet-interactive').css("fill","").css("fillOpacity","").css("stroke","");
+    $('.leaflet-interactive').css("fill","").css("fillOpacity","").css("strokeOpacity","").css("strokeWidth","");
     
 }
 
@@ -78,7 +87,7 @@ function onEachFeature(feature, layer) {
 function pointToLayer(feature, latlng) {
     return L.circleMarker(latlng, 
         {
-            radius: 5,
+            radius: getRadius(feature.properties.All_Counted_Units),
             color: getColor(feature.properties.Pct_Total_Units_Affordable),
             fillColor: getColor(feature.properties.Pct_Total_Units_Affordable),
             weight: 1.5,
