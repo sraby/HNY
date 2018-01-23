@@ -173,6 +173,13 @@ map.on('popupclose', function(e) {
     $(".leaflet-control-container").css("display","block");
 });
 
+
+// GEOCODER 
+
+L.Control.geocoder({
+    position: 'topleft'
+}).addTo(map);
+
 // LAYER CONTROL
 
 /* 
@@ -186,12 +193,14 @@ var overlays = {
 
 L.control.layers(baselayers, overlays, {position: 'topright', collapsed: false}).addTo(map);
 
-*/ 
 
-L.Control.geocoder().addTo(map);
+
+
 
 $('.leaflet-control-layers-overlays span').click(function() {
     $(this).toggleClass('layer-selected')
  });
 
 $('.leaflet-control-layers-base').html("Layers:");
+
+*/ 
