@@ -147,14 +147,15 @@ function unitUnits(x) {
 
 geojson.bindPopup(function (layer) {
     return L.Util.template('<h2>' + layer.feature.properties.Number + ' ' + toTitleCase(layer.feature.properties.Street) + ', ' + layer.feature.properties.Borough + '</h2>' +
-            'This building in ' + layer.feature.properties.Neighborhood + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + ' </b> counting towards the Housing New York plan. ' +
+            'This building in ' + layer.feature.properties.Neighborhood + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + '</b> (out of ' + layer.feature.properties.Total_Units +') counting towards the Housing New York plan. ' +
             '<table>' + 
-              '<tr><td>Units for $0—$23,350 incomes:</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
-              '<tr><td>Units for $23,351—$38,850 incomes:</td><td>' + layer.feature.properties.Very_Low_Income + '</td></tr>' +
-              '<tr><td>Units for $38,851—$62,150 incomes:</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
-              '<tr><td>Units for $62,150—$93,240 incomes:</td><td>' + layer.feature.properties.Moderate_Income + '</td></tr>' +
-              '<tr><td>Units for $93,241—$128,205 incomes: </td><td>' + layer.feature.properties.Middle_Income + '</td></tr>' +
-              '<tr><td>Units listed as Other:</td><td>' + layer.feature.properties.Other + '</td></tr>' +
+              '<tr><th>Income Range</th><th># of Units</th></tr>' +
+              '<tr><td>$0—$23,350</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
+              '<tr><td>$23,351—$38,850</td><td>' + layer.feature.properties.Very_Low_Income + '</td></tr>' +
+              '<tr><td>$38,851—$62,150</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
+              '<tr><td>$62,150—$93,240</td><td>' + layer.feature.properties.Moderate_Income + '</td></tr>' +
+              '<tr><td>$93,241—$128,205</td><td>' + layer.feature.properties.Middle_Income + '</td></tr>' +
+              '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
               '</table>' +
               'A typical (median-income) household in this neighborhood makes about <b>$' + numberWithCommas(layer.feature.properties.MHI_2015) + ' a year</b>, so locals can afford <b>' + Math.floor(layer.feature.properties.Pct_Total_Units_Affordable*1000)/10 + '%</b> of the units in this building.');
         });
