@@ -146,15 +146,15 @@ function unitUnits(x) {
 }
 
 geojson.bindPopup(function (layer) {
-    return L.Util.template('<h3>' + layer.feature.properties.Number + ' ' + toTitleCase(layer.feature.properties.Street) + ', ' + layer.feature.properties.Borough + '</h3>' +
+    return L.Util.template('<h2>' + layer.feature.properties.Number + ' ' + toTitleCase(layer.feature.properties.Street) + ', ' + layer.feature.properties.Borough + '</h2>' +
             'This building in ' + layer.feature.properties.Neighborhood + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + ' </b> counting towards the Housing New York plan. ' +
             '<br></br><table>' + 
-              '<tr><td>Units for $0 to $23,350 incomes</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
-              '<tr><td>Units for $23,351 to $38,850 incomes</td><td>' + layer.feature.properties.Very_Low_Income + '</td></tr>' +
-              '<tr><td>Units for $38,851 to $62,150 incomes</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
-              '<tr><td>Units for $62,150 to $93,240 incomes</td><td>' + layer.feature.properties.Moderate_Income + '</td></tr>' +
-              '<tr><td>Units for $93,241 to $128,205 incomes </td><td>' + layer.feature.properties.Middle_Income + '</td></tr>' +
-              '<tr><td>Units listed as Other</td><td>' + layer.feature.properties.Other + '</td></tr>' +
+              '<tr><td>Units for $0—$23,350 incomes:</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
+              '<tr><td>Units for $23,351—$38,850 incomes:</td><td>' + layer.feature.properties.Very_Low_Income + '</td></tr>' +
+              '<tr><td>Units for $38,851—$62,150 incomes:</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
+              '<tr><td>Units for $62,150—$93,240 incomes:</td><td>' + layer.feature.properties.Moderate_Income + '</td></tr>' +
+              '<tr><td>Units for $93,241—$128,205 incomes: </td><td>' + layer.feature.properties.Middle_Income + '</td></tr>' +
+              '<tr><td>Units listed as Other:</td><td>' + layer.feature.properties.Other + '</td></tr>' +
               '</table><br>' +
               'A typical (median-income) household in this neighborhood makes about <b>$' + numberWithCommas(layer.feature.properties.MHI_2015) + ' a year</b>, meaning they can afford <b>' + Math.floor(layer.feature.properties.Pct_Total_Units_Affordable*1000)/10 + '%</b> of the units in this building.');
         });
