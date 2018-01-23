@@ -129,7 +129,7 @@ input[type="checkbox" i] {
     font-size: 1.1em;
 }
 
-.legend {
+#legend {
     background: rgba(256,256,256,.8);
     border: 0px solid #47473e;
     border-radius: 4px;
@@ -191,6 +191,12 @@ input[type="checkbox" i] {
  
 
 /* Mobile */ 
+
+@media (min-width: 500px) {
+    #legend {
+        display: block !important;
+    }
+}
 
 @media (max-width: 500px) {
     .title-text {

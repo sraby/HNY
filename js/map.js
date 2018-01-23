@@ -162,7 +162,12 @@ geojson.bindPopup(function (layer) {
 map.on('popupopen', function(e) {
     var location = map.project(e.popup._latlng); 
     location.y -= e.popup._container.clientHeight/2;
-    map.panTo(map.unproject(location),{animate: true}); 
+    map.panTo(map.unproject(location),{animate: true});
+    $("#legend").css("display","none");
+});
+
+map.on('popupclose', function(e) {
+    $("#legend").css("display","block");
 });
 
 // LAYER CONTROL
@@ -187,6 +192,3 @@ $('.leaflet-control-layers-overlays span').click(function() {
  });
 
 $('.leaflet-control-layers-base').html("Layers:");
-
-
- 
