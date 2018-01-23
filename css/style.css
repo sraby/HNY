@@ -196,6 +196,10 @@ input[type="checkbox" i] {
     #legend {
         display: block !important;
     }
+
+    .leaflet-control-container {
+        display: block !important;
+    }
 }
 
 @media (max-width: 500px) {

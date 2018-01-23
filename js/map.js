@@ -3,7 +3,7 @@
 var map = L.map('mainmap', {
     scrollWheelZoom: false,
     attributionControl: false
-}).setView([40.716303, -73.940535], 10);
+}).setView([40.716303, -73.940535], 11);
 
 var tonerUrl = "https://stamen-tiles.a.ssl.fastly.net/toner-lite/{Z}/{X}/{Y}.png";
 
@@ -164,10 +164,12 @@ map.on('popupopen', function(e) {
     location.y -= e.popup._container.clientHeight/2;
     map.panTo(map.unproject(location),{animate: true});
     $("#legend").css("display","none");
+    $(".leaflet-control-container").css("display","none");
 });
 
 map.on('popupclose', function(e) {
     $("#legend").css("display","block");
+    $(".leaflet-control-container").css("display","block");
 });
 
 // LAYER CONTROL
