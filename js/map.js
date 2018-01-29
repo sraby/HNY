@@ -109,14 +109,14 @@ function pointToLayer(feature, latlng) {
 
 // Field Names: 
 // 
-// Project_ID   Project_Name    Project_Start_Date  Project_Completion_Date Building_ID Number  Street  Borough Postcode    
-// BBL BIN Community_Board Council_District    Census_Tract    NTA_Neighborhood_Tabulation_Area    Latitude    Longitude   
-// Latitude_Internal   Longitude_Internal  Building_Completion_Date    Reporting_Construction_Type Extended_Affordability_Only 
-// Prevailing_Wage_Status  Extremely_Low_Income_Units  Very_Low_Income Low_Income_Units    Moderate_Income Middle_Income   Other   
-// Counted_Rental_Units    Counted_Homeownership_Units All_Counted_Units   Total_Units LatLong_Copied_from_Centroid    
-// PUMA_Number PUMA_Full_Name  Neighborhood    MHI_2015    AMI_2015    Income_Range_of_2015_Median_Earner  Highest_Income_Band_Affordable  
-// Units_Affordable_to_Median_Income_Earner    Units_Unaffordable_to_Median_Income_Earner  Units_Other Pct_Total_Units_Affordable  
-// Pct_Total_Units_Unaffordable    Pct_Total_Units_Other                            
+// Project_ID   Project_Name    Project_Start_Date  Project_Completion_Date Building_ID Number  Street  Borough Postcode    BBL BIN 
+// Community_Board Council_District    Census_Tract    NTA_Neighborhood_Tabulation_Area    Latitude    Longitude   Latitude_Internal   
+// Longitude_Internal  Building_Completion_Date    Reporting_Construction_Type Extended_Affordability_Only Prevailing_Wage_Status  
+// Extremely_Low_Income_Units  Very_Low_Income_Units   Low_Income_Units    Moderate_Income_Units   Middle_Income_Units Other   
+// Studio_Units    1-BR_Units  2-BR_Units  3-BR_Units  4-BR_Units  5-BR_Units  6-BR+_Units Unknown-BR_Units    Counted_Rental_Units    
+// Counted_Homeownership_Units All_Counted_Units   Total_Units LatLng_Copied_From_Internal Neighborhood    MHI_2016    AMI_2016_Family_Of_3    
+// Income_Range_of_2016_Median_Earner  Highest_Income_Band_Affordable  Units_Affordable_to_Median_Income_Earner    
+// Units_Unaffordable_to_Median_Income_Earner  Units_Other Pct_Total_Units_Affordable  Pct_Total_Units_Unaffordable    Pct_Total_Units_Other                            
 
 geojson = L.geoJson(HNYdata, {
     pointToLayer: pointToLayer,
@@ -150,14 +150,14 @@ geojson.bindPopup(function (layer) {
             'This building in ' + layer.feature.properties.Neighborhood + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + '</b> (out of ' + layer.feature.properties.Total_Units +') counting towards the Housing New York plan. ' +
             '<table>' + 
               '<tr><th>Income Range</th><th># of Units</th></tr>' +
-              '<tr><td>$0—$23,350</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
-              '<tr><td>$23,351—$38,850</td><td>' + layer.feature.properties.Very_Low_Income + '</td></tr>' +
-              '<tr><td>$38,851—$62,150</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
-              '<tr><td>$62,150—$93,240</td><td>' + layer.feature.properties.Moderate_Income + '</td></tr>' +
-              '<tr><td>$93,241—$128,205</td><td>' + layer.feature.properties.Middle_Income + '</td></tr>' +
+              '<tr><td>$0—$24,480</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
+              '<tr><td>$24,481—$40,800</td><td>' + layer.feature.properties.Very_Low_Income_Units + '</td></tr>' +
+              '<tr><td>$40,801—$65,280</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
+              '<tr><td>$65,281—$97,920</td><td>' + layer.feature.properties.Moderate_Income_Units + '</td></tr>' +
+              '<tr><td>$97,921—$134,640</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
               '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
               '</table>' +
-              'A typical (median-income) household in this neighborhood makes about <b>$' + numberWithCommas(layer.feature.properties.MHI_2015) + ' a year</b>, so locals can afford <b>' + Math.floor(layer.feature.properties.Pct_Total_Units_Affordable*1000)/10 + '%</b> of the units in this building.');
+              'A typical (median-income) household in this neighborhood makes about <b>$' + numberWithCommas(layer.feature.properties.MHI_2016) + ' a year</b>, so locals can afford <b>' + Math.floor(layer.feature.properties.Pct_Total_Units_Affordable*1000)/10 + '%</b> of the units in this building.');
         });
 
 map.on('popupopen', function(e) {
