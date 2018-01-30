@@ -150,10 +150,10 @@ geojson.bindPopup(function (layer) {
             'This building in ' + layer.feature.properties.Neighborhood + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + '</b> (out of ' + layer.feature.properties.Total_Units +') counting towards the Housing New York plan. ' +
             '<table>' + 
               '<tr><th>Income Range</th><th># of Units</th></tr>' +
-              '<tr><td>$0—$24,480</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
-              '<tr><td>$24,481—$40,800</td><td>' + layer.feature.properties.Very_Low_Income_Units + '</td></tr>' +
-              '<tr><td>$40,801—$65,280</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
-              '<tr><td>$65,281—$97,920</td><td>' + layer.feature.properties.Moderate_Income_Units + '</td></tr>' +
+              '<tr><td>$0—$24,500</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
+              '<tr><td>$24,501—$40,800</td><td>' + layer.feature.properties.Very_Low_Income_Units + '</td></tr>' +
+              '<tr><td>$40,801—$65,250</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
+              '<tr><td>$65,251—$97,920</td><td>' + layer.feature.properties.Moderate_Income_Units + '</td></tr>' +
               '<tr><td>$97,921—$134,640</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
               '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
               '</table>' +
