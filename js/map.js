@@ -2,7 +2,8 @@
 
 var map = L.map('mainmap', {
     scrollWheelZoom: false,
-    attributionControl: false
+    attributionControl: false,
+    maxZoom: 18
 }).setView([40.716303, -73.940535], 11);
 
 var tonerUrl = "https://stamen-tiles.a.ssl.fastly.net/toner-lite/{Z}/{X}/{Y}.png";
@@ -61,7 +62,7 @@ function highlightFeature(e) {
 
     $(e.target.getElement()).attr('id', 'active');
 
-    $('.leaflet-interactive').not('#active').css("fillOpacity","0.2").css("strokeOpacity","0.25");
+    $('.leaflet-interactive').not('#active').not('.reference').css("fillOpacity","0.2").css("strokeOpacity","0.25");
 
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
@@ -74,8 +75,8 @@ function resetHighlight(e) {
     var layer = e.target;
 
     layer.setStyle({
-        fillOpacity: 0.5,
-        opacity: 0.5
+        fillOpacity: 0.6,
+        opacity: 0.6
     });
 
     $(e.target.getElement()).removeAttr("id");
@@ -99,8 +100,8 @@ function pointToLayer(feature, latlng) {
             color: getBorder(feature.properties.Pct_Total_Units_Affordable),
             fillColor: getColor(feature.properties.Pct_Total_Units_Affordable),
             weight: 1,
-            opacity: 0.5,
-            fillOpacity: 0.5
+            opacity: 0.6,
+            fillOpacity: 0.6
         }
     );
 }
@@ -157,7 +158,7 @@ geojson.bindPopup(function (layer) {
               '<tr><td>$97,921—$134,640</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
               '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
               '</table>' +
-              'A typical (median-income) household in this neighborhood makes about <b>$' + numberWithCommas(layer.feature.properties.MHI_2016) + ' a year</b>, so locals can afford <b>' + Math.floor(layer.feature.properties.Pct_Total_Units_Affordable*1000)/10 + '%</b> of the units in this building.');
+              'A typical (median-income) household in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_2016) + ' a year</b>, so locals can afford about <b>' + Math.floor(layer.feature.properties.Pct_Total_Units_Affordable*1000)/10 + '%</b> of the units in this building.');
         });
 
 map.on('popupopen', function(e) {
@@ -173,6 +174,37 @@ map.on('popupclose', function(e) {
     $(".leaflet-control-container").css("display","block");
 });
 
+// NEIGHBORHOOD BOUNDARIES
+
+var reference = map.createPane('reference'); 
+
+map.getPane('reference').style.zIndex = 250;
+map.getPane('reference').style.opacity = 0;
+map.getPane('reference').style.pointerEvents = 'none';
+
+
+function styleBoundaries(feature) {
+    return {
+    weight: 2,
+    color: '#000',
+    fillColor: 'rgba(0,0,0,0)',
+    //dashArray: 2,
+    pane: reference
+    };
+}
+
+map.on('zoomend', function() {
+    if (map.getZoom() >= 14) {
+        map.getPane('reference').style.opacity = 0.6;
+    }
+    else {
+        map.getPane('reference').style.opacity = 0;
+    }
+});
+
+L.geoJson(NYboundaries, {
+    style: styleBoundaries, 
+    interactive: false}).addTo(map);
 
 // GEOCODER 
 
@@ -205,26 +237,5 @@ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRU
 HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-// LAYER CONTROL
-
-var baselayers = {};
-
-var overlays = {
-    "Sold $1 Lots": ODL_sold,
-    "Pending $1 Lots": ODL_pending
-};
-
-L.control.layers(baselayers, overlays, {position: 'topright', collapsed: false}).addTo(map);
-
-
-
-
-
-$('.leaflet-control-layers-overlays span').click(function() {
-    $(this).toggleClass('layer-selected')
- });
-
-$('.leaflet-control-layers-base').html("Layers:");
 
 */ 
