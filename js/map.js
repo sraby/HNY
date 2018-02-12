@@ -93,12 +93,64 @@ function onEachFeature(feature, layer) {
 } 
 
 
-function pointToLayer(feature, latlng) {
+function pointToLayer1(feature, latlng) {
     return L.circleMarker(latlng, 
         {
             radius: getRadius(feature.properties.All_Counted_Units),
-            color: getBorder(feature.properties.Pct_Total_Units_Affordable),
-            fillColor: getColor(feature.properties.Pct_Total_Units_Affordable),
+            color: getBorder(feature.properties.Pct_1_person_affordable),
+            fillColor: getColor(feature.properties.Pct_1_person_affordable),
+            weight: 1,
+            opacity: 0.6,
+            fillOpacity: 0.6
+        }
+    );
+}
+
+function pointToLayer2(feature, latlng) {
+    return L.circleMarker(latlng, 
+        {
+            radius: getRadius(feature.properties.All_Counted_Units),
+            color: getBorder(feature.properties.Pct_2_person_affordable),
+            fillColor: getColor(feature.properties.Pct_2_person_affordable),
+            weight: 1,
+            opacity: 0.6,
+            fillOpacity: 0.6
+        }
+    );
+}
+
+function pointToLayer3(feature, latlng) {
+    return L.circleMarker(latlng, 
+        {
+            radius: getRadius(feature.properties.All_Counted_Units),
+            color: getBorder(feature.properties.Pct_3_person_affordable),
+            fillColor: getColor(feature.properties.Pct_3_person_affordable),
+            weight: 1,
+            opacity: 0.6,
+            fillOpacity: 0.6
+        }
+    );
+}
+
+function pointToLayer4(feature, latlng) {
+    return L.circleMarker(latlng, 
+        {
+            radius: getRadius(feature.properties.All_Counted_Units),
+            color: getBorder(feature.properties.Pct_4_person_affordable),
+            fillColor: getColor(feature.properties.Pct_4_person_affordable),
+            weight: 1,
+            opacity: 0.6,
+            fillOpacity: 0.6
+        }
+    );
+}
+
+function pointToLayer5(feature, latlng) {
+    return L.circleMarker(latlng, 
+        {
+            radius: getRadius(feature.properties.All_Counted_Units),
+            color: getBorder(feature.properties.Pct_5_person_affordable),
+            fillColor: getColor(feature.properties.Pct_5_person_affordable),
             weight: 1,
             opacity: 0.6,
             fillOpacity: 0.6
@@ -110,19 +162,38 @@ function pointToLayer(feature, latlng) {
 
 // Field Names: 
 // 
-// Project_ID   Project_Name    Project_Start_Date  Project_Completion_Date Building_ID Number  Street  Borough Postcode    BBL BIN 
-// Community_Board Council_District    Census_Tract    NTA_Neighborhood_Tabulation_Area    Latitude    Longitude   Latitude_Internal   
-// Longitude_Internal  Building_Completion_Date    Reporting_Construction_Type Extended_Affordability_Only Prevailing_Wage_Status  
-// Extremely_Low_Income_Units  Very_Low_Income_Units   Low_Income_Units    Moderate_Income_Units   Middle_Income_Units Other   
-// Studio_Units    1-BR_Units  2-BR_Units  3-BR_Units  4-BR_Units  5-BR_Units  6-BR+_Units Unknown-BR_Units    Counted_Rental_Units    
-// Counted_Homeownership_Units All_Counted_Units   Total_Units LatLng_Copied_From_Internal Neighborhood    MHI_2016    AMI_2016_Family_Of_3    
-// Income_Range_of_2016_Median_Earner  Highest_Income_Band_Affordable  Units_Affordable_to_Median_Income_Earner    
-// Units_Unaffordable_to_Median_Income_Earner  Units_Other Pct_Total_Units_Affordable  Pct_Total_Units_Unaffordable    Pct_Total_Units_Other                            
+// Number   Street  Borough Latitude    Longitude   Extremely_Low_Income_Units  Very_Low_Income_Units   
+// Low_Income_Units    Moderate_Income_Units   Middle_Income_Units Other   All_Counted_Units   Total_Units 
+// LatLng_Copied_From_Internal pumaid  PUMA_disctrict  PUMA_borough    PUMA_name   MHI_1_person_households 
+// MHI_2_person_households MHI_3_person_households MHI_4_person_households MHI_5_person_households 
+// Highest_1_person_Afford Units_1_person_Afford   Pct_1_person_affordable Highest_2_person_Afford Units_2_person_Afford   
+// Pct_2_person_affordable Highest_3_person_Afford Units_3_person_Afford   Pct_3_person_affordable Highest_4_person_Afford 
+// Units_4_person_Afford   Pct_4_person_affordable Highest_5_person_Afford Units_5_person_Afford   Pct_5_person_affordable                         
 
-geojson = L.geoJson(HNYdata, {
-    pointToLayer: pointToLayer,
+HNY1 = L.geoJson(HNYdata, {
+    pointToLayer: pointToLayer1,
     onEachFeature: onEachFeature
 }).addTo(map);
+
+HNY2 = L.geoJson(HNYdata, {
+    pointToLayer: pointToLayer2,
+    onEachFeature: onEachFeature
+});
+
+HNY3 = L.geoJson(HNYdata, {
+    pointToLayer: pointToLayer3,
+    onEachFeature: onEachFeature
+});
+
+HNY4 = L.geoJson(HNYdata, {
+    pointToLayer: pointToLayer4,
+    onEachFeature: onEachFeature
+});
+
+HNY5 = L.geoJson(HNYdata, {
+    pointToLayer: pointToLayer5,
+    onEachFeature: onEachFeature
+});
 
 // POP UPS 
 
@@ -146,9 +217,39 @@ function unitUnits(x) {
         {return 'units'}
 }
 
-geojson.bindPopup(function (layer) {
+HNY1.bindPopup(function (layer) {
     return L.Util.template('<h2>' + layer.feature.properties.Number + ' ' + toTitleCase(layer.feature.properties.Street) + ', ' + layer.feature.properties.Borough + '</h2>' +
-            'This building in ' + layer.feature.properties.Neighborhood + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + '</b> (out of ' + layer.feature.properties.Total_Units +') counting towards the Housing New York plan. ' +
+            'This building in ' + layer.feature.properties.PUMA_name + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + '</b> (out of ' + layer.feature.properties.Total_Units +') counting towards the Housing New York plan. ' +
+            '<table>' + 
+              '<tr><th>Income Range</th><th># of Units</th></tr>' +
+              '<tr><td>$0—$19,050</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
+              '<tr><td>$19,051—$31,750</td><td>' + layer.feature.properties.Very_Low_Income_Units + '</td></tr>' +
+              '<tr><td>$31,751—$50,750</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
+              '<tr><td>$50,751—$76,200</td><td>' + layer.feature.properties.Moderate_Income_Units + '</td></tr>' +
+              '<tr><td>$76,201—$104,775</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
+              '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
+              '</table>' +
+              'A typical (median-income) <b>household of one</b> in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_1_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_1_person_affordable*1000)/10 + '%</b> of the units in this building.');
+        });
+
+HNY2.bindPopup(function (layer) {
+    return L.Util.template('<h2>' + layer.feature.properties.Number + ' ' + toTitleCase(layer.feature.properties.Street) + ', ' + layer.feature.properties.Borough + '</h2>' +
+            'This building in ' + layer.feature.properties.PUMA_name + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + '</b> (out of ' + layer.feature.properties.Total_Units +') counting towards the Housing New York plan. ' +
+            '<table>' + 
+              '<tr><th>Income Range</th><th># of Units</th></tr>' +
+              '<tr><td>$0—$21,800</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
+              '<tr><td>$21,801—$36,250</td><td>' + layer.feature.properties.Very_Low_Income_Units + '</td></tr>' +
+              '<tr><td>$36,251—$58,000</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
+              '<tr><td>$58,001—$87,000</td><td>' + layer.feature.properties.Moderate_Income_Units + '</td></tr>' +
+              '<tr><td>$87,001—$119,625</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
+              '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
+              '</table>' +
+              'A typical (median-income) household of two in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_2_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_2_person_affordable*1000)/10 + '%</b> of the units in this building.');
+        });
+
+HNY3.bindPopup(function (layer) {
+    return L.Util.template('<h2>' + layer.feature.properties.Number + ' ' + toTitleCase(layer.feature.properties.Street) + ', ' + layer.feature.properties.Borough + '</h2>' +
+            'This building in ' + layer.feature.properties.PUMA_name + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + '</b> (out of ' + layer.feature.properties.Total_Units +') counting towards the Housing New York plan. ' +
             '<table>' + 
               '<tr><th>Income Range</th><th># of Units</th></tr>' +
               '<tr><td>$0—$24,500</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
@@ -158,7 +259,37 @@ geojson.bindPopup(function (layer) {
               '<tr><td>$97,921—$134,640</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
               '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
               '</table>' +
-              'A typical (median-income) household in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_2016) + ' a year</b>, so locals can afford about <b>' + Math.floor(layer.feature.properties.Pct_Total_Units_Affordable*1000)/10 + '%</b> of the units in this building.');
+              'A typical (median-income) household of three in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_3_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_3_person_affordable*1000)/10 + '%</b> of the units in this building.');
+        });
+
+HNY4.bindPopup(function (layer) {
+    return L.Util.template('<h2>' + layer.feature.properties.Number + ' ' + toTitleCase(layer.feature.properties.Street) + ', ' + layer.feature.properties.Borough + '</h2>' +
+            'This building in ' + layer.feature.properties.PUMA_name + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + '</b> (out of ' + layer.feature.properties.Total_Units +') counting towards the Housing New York plan. ' +
+            '<table>' + 
+              '<tr><th>Income Range</th><th># of Units</th></tr>' +
+              '<tr><td>$0—$27,200</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
+              '<tr><td>$27,201—$45,300</td><td>' + layer.feature.properties.Very_Low_Income_Units + '</td></tr>' +
+              '<tr><td>$45,301—$72,500</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
+              '<tr><td>$72,501—$108,720</td><td>' + layer.feature.properties.Moderate_Income_Units + '</td></tr>' +
+              '<tr><td>$108,721—$149,490</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
+              '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
+              '</table>' +
+              'A typical (median-income) household of four in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_4_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_4_person_affordable*1000)/10 + '%</b> of the units in this building.');
+        });
+
+HNY5.bindPopup(function (layer) {
+    return L.Util.template('<h2>' + layer.feature.properties.Number + ' ' + toTitleCase(layer.feature.properties.Street) + ', ' + layer.feature.properties.Borough + '</h2>' +
+            'This building in ' + layer.feature.properties.PUMA_name + ' has <b>' + layer.feature.properties.All_Counted_Units + ' ' + unitUnits(layer.feature.properties.All_Counted_Units) + '</b> (out of ' + layer.feature.properties.Total_Units +') counting towards the Housing New York plan. ' +
+            '<table>' + 
+              '<tr><th>Income Range</th><th># of Units</th></tr>' +
+              '<tr><td>$0—$29,400</td><td>' + layer.feature.properties.Extremely_Low_Income_Units + '</td></tr>' + 
+              '<tr><td>$29,401—$48,950</td><td>' + layer.feature.properties.Very_Low_Income_Units + '</td></tr>' +
+              '<tr><td>$48,951—$78,300</td><td>' + layer.feature.properties.Low_Income_Units + '</td></tr>' +
+              '<tr><td>$78,301—$117,480</td><td>' + layer.feature.properties.Moderate_Income_Units + '</td></tr>' +
+              '<tr><td>$117,481—$161,535</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
+              '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
+              '</table>' +
+              'A typical (median-income) household of five in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_5_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_5_person_affordable*1000)/10 + '%</b> of the units in this building.');
         });
 
 map.on('popupopen', function(e) {
@@ -174,43 +305,50 @@ map.on('popupclose', function(e) {
     $(".leaflet-control-container").css("display","block");
 });
 
-// NEIGHBORHOOD BOUNDARIES
+// COMMUNITY DISTRICTS DATA
 
 var reference = map.createPane('reference'); 
 
 map.getPane('reference').style.zIndex = 250;
-map.getPane('reference').style.opacity = 0;
-map.getPane('reference').style.pointerEvents = 'none';
 
-
-function styleBoundaries(feature) {
+function commStyle(feature) {
     return {
-    weight: 2,
-    color: '#000',
-    fillColor: 'rgba(0,0,0,0)',
-    //dashArray: 2,
-    pane: reference
+        weight: 1,
+        opacity: 1,
+        color: '#222',
+        fillColor: 'rgba(0,0,0,0)',
+        //dashArray: 4,
+        pane: reference 
     };
 }
 
-map.on('zoomend', function() {
-    if (map.getZoom() >= 14) {
-        map.getPane('reference').style.opacity = 0.6;
-    }
-    else {
-        map.getPane('reference').style.opacity = 0;
-    }
+var community_districts = L.geoJson(commDistricts, {
+    style: commStyle,
+    interactive: false
 });
-
-L.geoJson(NYboundaries, {
-    style: styleBoundaries, 
-    interactive: false}).addTo(map);
 
 // GEOCODER 
 
 L.Control.geocoder({
     position: 'topleft'
 }).addTo(map);
+
+// LAYER CONTROL 
+
+var baselayers = {
+    "One-person households": HNY1,
+    "Two-person households": HNY2,
+    "Three-person households": HNY3,
+    "Four-person households": HNY4,
+    "Five-person households": HNY5
+};
+
+var overlays = {
+    "Community Districts (PUMA)":community_districts
+};
+
+L.control.layers(baselayers, overlays, {position: 'topright', collapsed: true}).addTo(map);
+
 
 /* COPYWRIGHT INFO FOR GEOCODER 
 
