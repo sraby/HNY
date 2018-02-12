@@ -229,7 +229,7 @@ HNY1.bindPopup(function (layer) {
               '<tr><td>$76,201—$104,775</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
               '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
               '</table>' +
-              'A typical (median-income) <b>household of one</b> in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_1_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_1_person_affordable*1000)/10 + '%</b> of the units in this building.');
+              'A typical (median-income) <b>one-person household</b> in this district makes <b>$' + numberWithCommas(layer.feature.properties.MHI_1_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_1_person_affordable*1000)/10 + '%</b> of the units in this building.');
         });
 
 HNY2.bindPopup(function (layer) {
@@ -244,7 +244,7 @@ HNY2.bindPopup(function (layer) {
               '<tr><td>$87,001—$119,625</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
               '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
               '</table>' +
-              'A typical (median-income) household of two in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_2_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_2_person_affordable*1000)/10 + '%</b> of the units in this building.');
+              'A typical (median-income) <b>two-person household</b> in this district makes <b>$' + numberWithCommas(layer.feature.properties.MHI_2_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_2_person_affordable*1000)/10 + '%</b> of the units in this building.');
         });
 
 HNY3.bindPopup(function (layer) {
@@ -259,7 +259,7 @@ HNY3.bindPopup(function (layer) {
               '<tr><td>$97,921—$134,640</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
               '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
               '</table>' +
-              'A typical (median-income) household of three in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_3_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_3_person_affordable*1000)/10 + '%</b> of the units in this building.');
+              'A typical (median-income) <b>three-person household</b> in this district makes <b>$' + numberWithCommas(layer.feature.properties.MHI_3_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_3_person_affordable*1000)/10 + '%</b> of the units in this building.');
         });
 
 HNY4.bindPopup(function (layer) {
@@ -274,7 +274,7 @@ HNY4.bindPopup(function (layer) {
               '<tr><td>$108,721—$149,490</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
               '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
               '</table>' +
-              'A typical (median-income) household of four in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_4_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_4_person_affordable*1000)/10 + '%</b> of the units in this building.');
+              'A typical (median-income) <b>four-person household</b> in this district makes <b>$' + numberWithCommas(layer.feature.properties.MHI_4_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_4_person_affordable*1000)/10 + '%</b> of the units in this building.');
         });
 
 HNY5.bindPopup(function (layer) {
@@ -289,7 +289,7 @@ HNY5.bindPopup(function (layer) {
               '<tr><td>$117,481—$161,535</td><td>' + layer.feature.properties.Middle_Income_Units + '</td></tr>' +
               '<tr class="no-border"><td><q>other</q> units</td><td>' + layer.feature.properties.Other + '</td></tr>' +
               '</table>' +
-              'A typical (median-income) household of five in this neighborhood makes <b>$' + numberWithCommas(layer.feature.properties.MHI_5_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_5_person_affordable*1000)/10 + '%</b> of the units in this building.');
+              'A typical (median-income) <b>five-person household</b> in this district makes <b>$' + numberWithCommas(layer.feature.properties.MHI_5_person_households) + ' a year</b> and can afford about <b>' + Math.floor(layer.feature.properties.Pct_5_person_affordable*1000)/10 + '%</b> of the units in this building.');
         });
 
 map.on('popupopen', function(e) {
