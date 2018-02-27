@@ -2,7 +2,6 @@
 
 var map = L.map('mainmap', {
     scrollWheelZoom: false,
-    attributionControl: false,
     maxZoom: 18
 }).setView([40.716303, -73.940535], 11);
 
@@ -329,9 +328,16 @@ var community_districts = L.geoJson(commDistricts, {
 
 // GEOCODER 
 
-L.Control.geocoder({
-    position: 'topleft'
-}).addTo(map);
+var searchControl = L.esri.Geocoding.geosearch({position:'topleft'}).addTo(map);
+
+var results = L.layerGroup().addTo(map);
+
+searchControl.on("results", function(data) {
+    results.clearLayers();
+    for (var i = data.results.length - 1; i >= 0; i--) {
+        results.addLayer(L.marker(data.results[i].latlng));
+    }
+});
 
 // LAYER CONTROL 
 
@@ -348,32 +354,3 @@ var overlays = {
 };
 
 L.control.layers(baselayers, overlays, {position: 'topright', collapsed: true}).addTo(map);
-
-
-/* COPYWRIGHT INFO FOR GEOCODER 
-
-Copyright (c) 2012 sa3m (https://github.com/sa3m)
-Copyright (c) 2013 Per Liedman
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
-
-   1. Redistributions of source code must retain the above copyright notice, this list of
-      conditions and the following disclaimer.
-
-   2. Redistributions in binary form must reproduce the above copyright notice, this list
-      of conditions and the following disclaimer in the documentation and/or other materials
-      provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-*/ 

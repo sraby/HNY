@@ -36,6 +36,10 @@ tr {
     border-bottom: none;
 }
 
+.leaflet-bottom {
+    display: none !important;
+}
+
 #legend {
     background: rgba(256,256,256,1);
     border: 0px solid #47473e;
